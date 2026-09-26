@@ -1,0 +1,4 @@
+@props(['disabled' => false])
+
+{{-- Input teks standar. Atribut tambahan (name, type, value, dll) diteruskan otomatis. --}}
+<input @disabled($disabled) {{ $attributes->merge(['class' => 'border-stone-300 focus:border-brand focus:ring-brand rounded-lg shadow-sm text-sm']) }}>

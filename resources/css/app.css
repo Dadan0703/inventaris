@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Sembunyikan elemen Alpine.js (x-cloak) sebelum JavaScript selesai dimuat */
+[x-cloak] {
+    display: none !important;
+}
