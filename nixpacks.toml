@@ -1,8 +1,8 @@
 [phases.setup]
-nixPkgs = ["php84", "php84Packages.composer", "nodejs_22"]
+nixPkgs = ["php", "phpExtensions-pdo_mysql", "phpExtensions-mbstring", "phpExtensions-gd", "phpExtensions-curl", "phpExtensions-zip", "phpExtensions-sqlite", "nodejs", "npm"]
 
 [phases.install]
-cmds = ["composer install --no-dev --optimize-autoloader --no-interaction", "rm -rf node_modules package-lock.json && npm install"]
+cmds = ["composer install --no-dev --optimize-autoloader", "npm ci"]
 
 [phases.build]
 cmds = ["npm run build"]
