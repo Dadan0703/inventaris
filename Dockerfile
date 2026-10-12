@@ -17,4 +17,4 @@ RUN npm install && npm run build
 
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-CMD php artisan config:clear && php artisan package:discover --ansi && php artisan migrate --force && apache2-foreground
+CMD php artisan config:clear; php artisan package:discover --ansi; php artisan migrate --force; apache2-foreground

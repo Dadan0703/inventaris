@@ -2,25 +2,21 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Carbon;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\{Carbon, ServiceProvider};
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
-        // Nama hari & bulan tampil dalam Bahasa Indonesia, contoh: "Sabtu, 26 September 2026"
         Carbon::setLocale(config('app.locale'));
+        if ($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
     }
 }
