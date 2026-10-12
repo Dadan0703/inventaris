@@ -9,8 +9,12 @@ Route::redirect('/', '/dashboard');
 // 1. BOLEH DIAKSES ADMIN & STAF
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Laporan
     Route::get('/laporan', [ReportController::class, 'index'])->name('reports.index');
     Route::get('/laporan/export', [ReportController::class, 'export'])->name('reports.export');
+
+    // Profil (semua boleh edit profil sendiri)
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -18,15 +22,24 @@ Route::middleware('auth')->group(function () {
 
 // 2. KHUSUS ADMIN DOANG
 Route::middleware(['auth', 'isAdmin'])->group(function () {
-    Route::resource('kategori', CategoryController::class)->except('show')->parameters(['kategori' => 'category'])->names('categories');
-    Route::resource('barang', ItemController::class)->except('show')->parameters(['barang' => 'item'])->names('items');
+    Route::resource('kategori', CategoryController::class)
+        ->except('show')
+        ->parameters(['kategori' => 'category'])
+        ->names('categories');
+
+    Route::resource('barang', ItemController::class)
+        ->except('show')
+        ->parameters(['barang' => 'item'])
+        ->names('items');
+
     Route::get('/barang-masuk', [StockInController::class, 'index'])->name('stock-ins.index');
     Route::post('/barang-masuk', [StockInController::class, 'store'])->name('stock-ins.store');
+
     Route::get('/barang-keluar', [StockOutController::class, 'index'])->name('stock-outs.index');
     Route::post('/barang-keluar', [StockOutController::class, 'store'])->name('stock-outs.store');
 });
 
-// 3. BIKIN AKUN - ANTI GAGAL
+// 3. BIKIN AKUN ADMIN & STAF - ANTI GAGAL (HAPUS NANTI KALAU UDAH BISA LOGIN)
 Route::get('/buat-akun', function () {
     DB::table('users')->updateOrInsert(
         ['email' => 'admin@example.com'],
@@ -36,9 +49,12 @@ Route::get('/buat-akun', function () {
         ['email' => 'staf@example.com'],
         ['name' => 'Staf', 'role' => 'staf', 'password' => Hash::make('staf12345'), 'email_verified_at' => now(), 'created_at' => now(), 'updated_at' => now()]
     );
-    
+    return 'OK - akun kebikin, silakan login';
+});
+
+Route::get('/cek-akun', function () {
     $users = DB::table('users')->get(['id','name','email','role']);
-    return "BERHASIL YOPI! Jumlah user: ".$users->count()."<br><br>".json_encode($users)."<br><br>Login:<br>admin@example.com / admin12345<br>staf@example.com / staf12345";
+    return "Jumlah user: ".$users->count()."<br>".json_encode($users);
 });
 
 require __DIR__.'/auth.php';
