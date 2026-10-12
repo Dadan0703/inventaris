@@ -20,7 +20,8 @@
             <!-- Panel kiri berwarna merah (disembunyikan di layar kecil) -->
             <section class="hidden lg:flex w-[40%] flex-col justify-between bg-brand text-white p-16">
                 <div class="flex items-center gap-3">
-                    <x-application-logo class="w-12 h-12 bg-white text-brand" />
+                    {{-- LOGO FIX - pakai file di public/logoinventaris.jpg --}}
+                    <img src="{{ asset('investasilogo.jpg') }}" alt="Logo Inventaris" class="w-14 h-14 rounded-xl bg-white p-1.5 object-cover shadow-sm">
                     <span class="text-lg font-semibold">Inventaris</span>
                 </div>
 

@@ -20,11 +20,13 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Admin Gudang',
             'email' => 'admin@example.com',
+            'role' => 'admin',
         ]);
 
         User::factory()->create([
             'name' => 'Staf Gudang',
             'email' => 'staf@example.com',
+            'role' => 'staf',
         ]);
 
         // Urutan penting: kategori -> barang -> transaksi
