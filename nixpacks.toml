@@ -1,11 +1,11 @@
 [phases.setup]
-nixPkgs = ["php", "phpExtensions-pdo_mysql", "phpExtensions-mbstring", "phpExtensions-gd", "phpExtensions-curl", "phpExtensions-zip", "phpExtensions-sqlite", "nodejs_20", "npm-10_x"]
+nixPkgs = ["php", "phpPackages.composer", "nodejs_20", "npm-10_x"]
 
 [phases.install]
-cmds = ["composer install --no-dev --optimize-autoloader", "npm install"]
+cmds = ["composer install --no-dev --optimize-autoloader", "npm ci"]
 
 [phases.build]
 cmds = ["npm run build"]
 
 [start]
-cmd = "php artisan config:clear && php artisan migrate --force && php artisan storage:link && php artisan serve --host=0.0.0.0 --port=$PORT"
+cmd = "php artisan config:clear && php artisan migrate --force && php artisan serve --host 0.0.0.0 --port $PORT"
