@@ -39,4 +39,17 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::post('/barang-keluar', [StockOutController::class, 'store'])->name('stock-outs.store');
 });
 
+// 3. BIKIN AKUN ADMIN & STAF - HAPUS SETELAH SELESAI!
+Route::get('/buat-akun', function () {
+    \App\Models\User::updateOrCreate(
+        ['email'=>'admin@example.com'],
+        ['name'=>'Admin', 'role'=>'admin', 'password'=>bcrypt('admin12345')]
+    );
+    \App\Models\User::updateOrCreate(
+        ['email'=>'staf@example.com'],
+        ['name'=>'Staf', 'role'=>'staf', 'password'=>bcrypt('staf12345')]
+    );
+    return 'BERHASIL YOPI! Akun udah jadi:<br><br>Admin: admin@example.com / admin12345 (bisa kelola barang, kategori, masuk, keluar)<br>Staf: staf@example.com / staf12345 (cuma bisa liat dashboard & laporan)<br><br>Jangan lupa hapus route ini ya!';
+});
+
 require __DIR__.'/auth.php';
